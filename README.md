@@ -43,5 +43,3 @@ Domain incremental learning test code for speech noise unimodal domain
 ### 3. `Simulation_code`
 
 Simulation code for MFusion and BP algorithms, implementing domain incremental learning on the MNIST dataset based on MLP to compare the learning effects of BP and MFusion.
-
-**Note:** This repository is released for academic research purposes. For usage instructions or contributions, please refer to the official documentation or contact the authors.
