@@ -1,0 +1,809 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - height: 40
+      width: 40
+      channel: 1
+      channel_last: true
+    - height: 40
+      width: 40
+      channel: 1
+      channel_last: true
+    - height: 40
+      width: 40
+      channel: 1
+      channel_last: true
+    - height: 1
+      width: 1
+      channel: 625
+      channel_last: true
+  Conv_0:
+    inputs:
+    - height: 40
+      width: 40
+      ref: graph_input:1
+      channel: 1
+    outputs:
+    - height: 15
+      width: 15
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 1
+      out_channel: 32
+      bias: false
+      kernel: 11
+      stride: 2
+      padding: 0
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 0
+        - 0
+        - 121
+        - 32
+  Relu_1:
+    inputs:
+    - height: 15
+      width: 15
+      ref: Conv_0
+      channel: 32
+    outputs:
+    - height: 15
+      width: 15
+      channel: 32
+    op:
+      op_id: relu
+  MaxPool_2:
+    inputs:
+    - height: 15
+      width: 15
+      ref: Relu_1
+      channel: 32
+    outputs:
+    - height: 7
+      width: 7
+      channel: 32
+    op:
+      op_id: maxpool2d
+      kernel: 3
+      stride: 2
+      padding: 0
+  Conv_3:
+    inputs:
+    - height: 7
+      width: 7
+      ref: MaxPool_2
+      channel: 32
+    outputs:
+    - height: 7
+      width: 7
+      channel: 64
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 64
+      bias: false
+      kernel: 5
+      stride: 1
+      padding: 2
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 0
+        - 32
+        - 400
+        - 64
+  Relu_4:
+    inputs:
+    - height: 7
+      width: 7
+      ref: Conv_3
+      channel: 64
+    outputs:
+    - height: 7
+      width: 7
+      channel: 64
+    op:
+      op_id: relu
+  MaxPool_5:
+    inputs:
+    - height: 7
+      width: 7
+      ref: Relu_4
+      channel: 64
+    outputs:
+    - height: 3
+      width: 3
+      channel: 64
+    op:
+      op_id: maxpool2d
+      kernel: 3
+      stride: 2
+      padding: 0
+  Conv_6:
+    inputs:
+    - height: 3
+      width: 3
+      ref: MaxPool_5
+      channel: 64
+    outputs:
+    - height: 3
+      width: 3
+      channel: 64
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:1
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+  Relu_7:
+    inputs:
+    - height: 3
+      width: 3
+      ref: Conv_6
+      channel: 64
+    outputs:
+    - height: 3
+      width: 3
+      channel: 64
+    op:
+      op_id: relu
+  Flatten_8:
+    inputs:
+    - height: 3
+      width: 3
+      ref: Relu_7
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 576
+    op:
+      op_id: flatten
+  Conv_9:
+    inputs:
+    - height: 40
+      width: 40
+      ref: graph_input:2
+      channel: 1
+    outputs:
+    - height: 15
+      width: 15
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 1
+      out_channel: 32
+      bias: false
+      kernel: 11
+      stride: 2
+      padding: 0
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 121
+        - 0
+        - 121
+        - 32
+  Relu_10:
+    inputs:
+    - height: 15
+      width: 15
+      ref: Conv_9
+      channel: 32
+    outputs:
+    - height: 15
+      width: 15
+      channel: 32
+    op:
+      op_id: relu
+  MaxPool_11:
+    inputs:
+    - height: 15
+      width: 15
+      ref: Relu_10
+      channel: 32
+    outputs:
+    - height: 7
+      width: 7
+      channel: 32
+    op:
+      op_id: maxpool2d
+      kernel: 3
+      stride: 2
+      padding: 0
+  Conv_12:
+    inputs:
+    - height: 7
+      width: 7
+      ref: MaxPool_11
+      channel: 32
+    outputs:
+    - height: 7
+      width: 7
+      channel: 64
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 64
+      bias: false
+      kernel: 5
+      stride: 1
+      padding: 2
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:1
+        address:
+        - 0
+        - 64
+        - 400
+        - 64
+  Relu_13:
+    inputs:
+    - height: 7
+      width: 7
+      ref: Conv_12
+      channel: 64
+    outputs:
+    - height: 7
+      width: 7
+      channel: 64
+    op:
+      op_id: relu
+  MaxPool_14:
+    inputs:
+    - height: 7
+      width: 7
+      ref: Relu_13
+      channel: 64
+    outputs:
+    - height: 3
+      width: 3
+      channel: 64
+    op:
+      op_id: maxpool2d
+      kernel: 3
+      stride: 2
+      padding: 0
+  Conv_15:
+    inputs:
+    - height: 3
+      width: 3
+      ref: MaxPool_14
+      channel: 64
+    outputs:
+    - height: 3
+      width: 3
+      channel: 64
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:2
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+  Relu_16:
+    inputs:
+    - height: 3
+      width: 3
+      ref: Conv_15
+      channel: 64
+    outputs:
+    - height: 3
+      width: 3
+      channel: 64
+    op:
+      op_id: relu
+  Flatten_17:
+    inputs:
+    - height: 3
+      width: 3
+      ref: Relu_16
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 576
+    op:
+      op_id: flatten
+  Concat_18:
+    inputs:
+    - ref: Flatten_8
+      channel: 576
+    - ref: Flatten_17
+      channel: 576
+    outputs:
+    - height: 1
+      width: 1
+      channel: 1152
+    op:
+      op_id: concat
+      axis: 1
+  MatMul_19:
+    inputs:
+    - ref: Concat_18
+      channel: 1152
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: matmul
+      in_channel: 1152
+      out_channel: 64
+      bias: false
+    mapping_info:
+      width: 1
+      height: 2
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:2
+        address:
+        - 0
+        - 64
+        - 576
+        - 64
+      - index:
+        - 0
+        - 1
+        - 0
+        device: rram-144k:3
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+  Relu_20:
+    inputs:
+    - ref: MatMul_19
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: relu
+  Conv_21:
+    inputs:
+    - height: 40
+      width: 40
+      ref: graph_input:0
+      channel: 1
+    outputs:
+    - height: 15
+      width: 15
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 1
+      out_channel: 32
+      bias: false
+      kernel: 11
+      stride: 2
+      padding: 0
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 242
+        - 0
+        - 121
+        - 32
+  Relu_22:
+    inputs:
+    - height: 15
+      width: 15
+      ref: Conv_21
+      channel: 32
+    outputs:
+    - height: 15
+      width: 15
+      channel: 32
+    op:
+      op_id: relu
+  MaxPool_23:
+    inputs:
+    - height: 15
+      width: 15
+      ref: Relu_22
+      channel: 32
+    outputs:
+    - height: 7
+      width: 7
+      channel: 32
+    op:
+      op_id: maxpool2d
+      kernel: 3
+      stride: 2
+      padding: 0
+  Conv_24:
+    inputs:
+    - height: 7
+      width: 7
+      ref: MaxPool_23
+      channel: 32
+    outputs:
+    - height: 7
+      width: 7
+      channel: 64
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 64
+      bias: false
+      kernel: 5
+      stride: 1
+      padding: 2
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:3
+        address:
+        - 0
+        - 64
+        - 400
+        - 64
+  Relu_25:
+    inputs:
+    - height: 7
+      width: 7
+      ref: Conv_24
+      channel: 64
+    outputs:
+    - height: 7
+      width: 7
+      channel: 64
+    op:
+      op_id: relu
+  MaxPool_26:
+    inputs:
+    - height: 7
+      width: 7
+      ref: Relu_25
+      channel: 64
+    outputs:
+    - height: 3
+      width: 3
+      channel: 64
+    op:
+      op_id: maxpool2d
+      kernel: 3
+      stride: 2
+      padding: 0
+  Conv_27:
+    inputs:
+    - height: 3
+      width: 3
+      ref: MaxPool_26
+      channel: 64
+    outputs:
+    - height: 3
+      width: 3
+      channel: 64
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:4
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+  Relu_28:
+    inputs:
+    - height: 3
+      width: 3
+      ref: Conv_27
+      channel: 64
+    outputs:
+    - height: 3
+      width: 3
+      channel: 64
+    op:
+      op_id: relu
+  Flatten_29:
+    inputs:
+    - height: 3
+      width: 3
+      ref: Relu_28
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 576
+    op:
+      op_id: flatten
+  MatMul_30:
+    inputs:
+    - ref: Flatten_29
+      channel: 576
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: matmul
+      in_channel: 576
+      out_channel: 64
+      bias: false
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:4
+        address:
+        - 0
+        - 64
+        - 576
+        - 64
+  Relu_31:
+    inputs:
+    - ref: MatMul_30
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: relu
+  Flatten_32:
+    inputs:
+    - ref: graph_input:3
+      channel: 625
+    outputs:
+    - height: 1
+      width: 1
+      channel: 625
+    op:
+      op_id: flatten
+  MatMul_33:
+    inputs:
+    - ref: Flatten_32
+      channel: 625
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: matmul
+      in_channel: 625
+      out_channel: 64
+      bias: false
+    mapping_info:
+      width: 1
+      height: 2
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:5
+        address:
+        - 0
+        - 0
+        - 312
+        - 64
+      - index:
+        - 0
+        - 1
+        - 0
+        device: rram-144k:5
+        address:
+        - 0
+        - 64
+        - 312
+        - 64
+  Relu_34:
+    inputs:
+    - ref: MatMul_33
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: relu
+  Concat_35:
+    inputs:
+    - ref: Relu_20
+      channel: 64
+    - ref: Relu_31
+      channel: 64
+    - ref: Relu_34
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 192
+    op:
+      op_id: concat
+      axis: 1
+  MatMul_36:
+    inputs:
+    - ref: Concat_35
+      channel: 192
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: matmul
+      in_channel: 192
+      out_channel: 64
+      bias: false
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:5
+        address:
+        - 312
+        - 0
+        - 192
+        - 64
+  Relu_37:
+    inputs:
+    - ref: MatMul_36
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: relu
+  MatMul_38:
+    inputs:
+    - ref: Relu_37
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 2
+    op:
+      op_id: matmul
+      in_channel: 64
+      out_channel: 2
+      bias: false
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 363
+        - 0
+        - 64
+        - 2
+  graph_output:
+    type: output
+    inputs:
+    - height: 1
+      width: 1
+      ref: MatMul_38
+      channel: 2
+      channel_last: true
+devices:
+  c200:
+    kind: rram-144k
+    number: 10
+    profile:
+      in_channel: 576
+      out_channel: 128
+      in_bits: 2
+      out_bits: 4
+      weight_bits: 4
+      signed: true

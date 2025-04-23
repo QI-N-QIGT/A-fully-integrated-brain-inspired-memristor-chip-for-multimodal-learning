@@ -1,0 +1,53 @@
+ir_version: e100-ir-1
+layers:
+  in:
+    type: input
+    inputs:
+      - ndim: 2
+        channel: 3
+  out:
+    type: output
+    inputs: [lp]
+  cv:
+    type: op
+    op:
+      op_id: conv2d
+      in_channel: 3
+      out_channel: 32
+      kernel: 1
+      bias: false
+    inputs: [in]
+  z:
+    type: op
+    op:
+      op_id: constant
+      value: 0
+  lp:
+    type: loop
+    repeat: 4
+    inputs: [cv, z]
+    layers:
+      i:
+        type: input
+        inputs:
+          - loop:
+              source: split
+              axis: 1
+          - loop:
+              source: output
+      c:
+        type: op
+        op:
+          op_id: conv2d
+          in_channel: 8
+          out_channel: 32
+          kernel: 3
+          padding: 1
+        inputs: ['i:0']
+      a:
+        type: op
+        op: add
+        inputs: [c, 'i:1']
+      o:
+        type: output
+        inputs: [a]

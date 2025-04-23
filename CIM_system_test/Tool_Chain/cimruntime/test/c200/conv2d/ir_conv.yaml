@@ -1,0 +1,22 @@
+ir-version: e100-ir-1
+layers:
+  inp:
+    type: input
+    inputs:
+      - dtype: uint8
+  conv:
+    op:
+      op_id: conv2d
+      in_channel: 1
+      out_channel: 64
+      kernel: 3
+      padding: 1
+    inputs: [inp]
+    weights:
+      weight:
+        shape: [64, 1, 3, 3]
+      bias:
+        shape: [64]
+  out:
+    type: output
+    inputs: [fc]

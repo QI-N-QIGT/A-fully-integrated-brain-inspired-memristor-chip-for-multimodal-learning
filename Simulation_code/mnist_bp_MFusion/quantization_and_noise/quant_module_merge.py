@@ -1,0 +1,4 @@
+from .quant_layer import QuanModule as QuanModuleMappingBackNoise
+from .quant_layer_backwonoise import QuanModule as QuanModuleMappingBackWoNoise
+
+QuanModule = QuanModuleMappingBackNoise+QuanModuleMappingBackWoNoise

@@ -1,0 +1,34 @@
+ir-version: e100-ir-1
+layers:
+  inp:
+    type: input
+    inputs:
+      - channel: 3
+        ndim: 2
+  conv:
+    op:
+      op_id: conv2d
+      in_channel: 3
+      out_channel: 64
+      kernel: 3
+      padding: 1
+    inputs: [inp]
+  relu:
+    op: relu
+    inputs: [conv]
+  pool:
+    op: global_max_pool2d
+    inputs: [relu]
+  flat:
+    op: flatten
+    inputs: [pool]
+  fc:
+    op:
+      op_id: matmul
+      in_channel: 64
+      out_channel: 10
+      bias: false
+    inputs: [flat]
+  out:
+    type: output
+    inputs: [fc]

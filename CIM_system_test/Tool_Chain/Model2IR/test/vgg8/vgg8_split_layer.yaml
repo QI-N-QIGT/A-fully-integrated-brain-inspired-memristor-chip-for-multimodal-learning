@@ -1,0 +1,4822 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - channel: 3
+      channel_last: true
+      width: 32
+      height: 32
+  Conv_0:
+    inputs:
+    - ref: graph_input:0
+      channel: 3
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 64
+        - 3
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 3
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Relu_1:
+    inputs:
+    - ref: Conv_0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  MaxPool_2:
+    inputs:
+    - ref: Relu_1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 16
+      height: 16
+    op:
+      op_id: maxpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Conv_3:
+    inputs:
+    - ref: MaxPool_2
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 128
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Relu_4:
+    inputs:
+    - ref: Conv_3
+      channel: 128
+      width: 16
+      height: 16
+    outputs:
+    - channel: 128
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  MaxPool_5:
+    inputs:
+    - ref: Relu_4
+      channel: 128
+      width: 16
+      height: 16
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    op:
+      op_id: maxpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Split_6:
+    inputs:
+    - ref: MaxPool_5
+      channel: 128
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: Split
+      axis: 1
+      split:
+      - 64
+      - 64
+  Conv_7:
+    inputs:
+    - ref: Split_6
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_8:
+    inputs:
+    - ref: Split_6
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_9:
+    inputs:
+    - ref: Conv_7
+      channel: 128
+      width: 8
+      height: 8
+    - ref: Conv_8
+      channel: 128
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: concat
+      axis: 1
+  Conv_10:
+    inputs:
+    - ref: Split_6
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_11:
+    inputs:
+    - ref: Split_6
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_12:
+    inputs:
+    - ref: Conv_10
+      channel: 128
+      width: 8
+      height: 8
+    - ref: Conv_11
+      channel: 128
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: concat
+      axis: 1
+  Add_13:
+    inputs:
+    - ref: Concat_9
+      channel: 256
+      width: 8
+      height: 8
+    - ref: Concat_12
+      channel: 256
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Relu_14:
+    inputs:
+    - ref: Add_13
+      channel: 256
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Split_15:
+    inputs:
+    - ref: Relu_14
+      channel: 256
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    - channel: 64
+      width: 8
+      height: 8
+    - channel: 64
+      width: 8
+      height: 8
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: Split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  Conv_16:
+    inputs:
+    - ref: Split_15
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_17:
+    inputs:
+    - ref: Split_15
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_18:
+    inputs:
+    - ref: Conv_16
+      channel: 128
+      width: 8
+      height: 8
+    - ref: Conv_17
+      channel: 128
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: concat
+      axis: 1
+  Conv_19:
+    inputs:
+    - ref: Split_15
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_20:
+    inputs:
+    - ref: Split_15
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_21:
+    inputs:
+    - ref: Conv_19
+      channel: 128
+      width: 8
+      height: 8
+    - ref: Conv_20
+      channel: 128
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: concat
+      axis: 1
+  Conv_22:
+    inputs:
+    - ref: Split_15
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_23:
+    inputs:
+    - ref: Split_15
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_24:
+    inputs:
+    - ref: Conv_22
+      channel: 128
+      width: 8
+      height: 8
+    - ref: Conv_23
+      channel: 128
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: concat
+      axis: 1
+  Conv_25:
+    inputs:
+    - ref: Split_15
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_26:
+    inputs:
+    - ref: Split_15
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_27:
+    inputs:
+    - ref: Conv_25
+      channel: 128
+      width: 8
+      height: 8
+    - ref: Conv_26
+      channel: 128
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: concat
+      axis: 1
+  Add_28:
+    inputs:
+    - ref: Concat_18
+      channel: 256
+      width: 8
+      height: 8
+    - ref: Concat_21
+      channel: 256
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Add_29:
+    inputs:
+    - ref: Add_28
+      channel: 256
+      width: 8
+      height: 8
+    - ref: Concat_24
+      channel: 256
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Add_30:
+    inputs:
+    - ref: Add_29
+      channel: 256
+      width: 8
+      height: 8
+    - ref: Concat_27
+      channel: 256
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Relu_31:
+    inputs:
+    - ref: Add_30
+      channel: 256
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  MaxPool_32:
+    inputs:
+    - ref: Relu_31
+      channel: 256
+      width: 8
+      height: 8
+    outputs:
+    - channel: 256
+      width: 4
+      height: 4
+    op:
+      op_id: maxpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Split_33:
+    inputs:
+    - ref: MaxPool_32
+      channel: 256
+      width: 4
+      height: 4
+    outputs:
+    - channel: 64
+      width: 4
+      height: 4
+    - channel: 64
+      width: 4
+      height: 4
+    - channel: 64
+      width: 4
+      height: 4
+    - channel: 64
+      width: 4
+      height: 4
+    op:
+      op_id: Split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  Conv_34:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_35:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_36:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_37:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_38:
+    inputs:
+    - ref: Conv_34
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_35
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_36
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_37
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Conv_39:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_40:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_41:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_42:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_43:
+    inputs:
+    - ref: Conv_39
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_40
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_41
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_42
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Conv_44:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_45:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_46:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_47:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_48:
+    inputs:
+    - ref: Conv_44
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_45
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_46
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_47
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Conv_49:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_50:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_51:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_52:
+    inputs:
+    - ref: Split_33
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_53:
+    inputs:
+    - ref: Conv_49
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_50
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_51
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_52
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Add_54:
+    inputs:
+    - ref: Concat_38
+      channel: 512
+      width: 4
+      height: 4
+    - ref: Concat_43
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: add
+  Add_55:
+    inputs:
+    - ref: Add_54
+      channel: 512
+      width: 4
+      height: 4
+    - ref: Concat_48
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: add
+  Add_56:
+    inputs:
+    - ref: Add_55
+      channel: 512
+      width: 4
+      height: 4
+    - ref: Concat_53
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: add
+  Relu_57:
+    inputs:
+    - ref: Add_56
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: relu
+  Split_58:
+    inputs:
+    - ref: Relu_57
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 64
+      width: 4
+      height: 4
+    - channel: 64
+      width: 4
+      height: 4
+    - channel: 64
+      width: 4
+      height: 4
+    - channel: 64
+      width: 4
+      height: 4
+    - channel: 64
+      width: 4
+      height: 4
+    - channel: 64
+      width: 4
+      height: 4
+    - channel: 64
+      width: 4
+      height: 4
+    - channel: 64
+      width: 4
+      height: 4
+    op:
+      op_id: Split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+  Conv_59:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_60:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_61:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_62:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_63:
+    inputs:
+    - ref: Conv_59
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_60
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_61
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_62
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Conv_64:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_65:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_66:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_67:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_68:
+    inputs:
+    - ref: Conv_64
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_65
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_66
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_67
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Conv_69:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_70:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_71:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_72:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_73:
+    inputs:
+    - ref: Conv_69
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_70
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_71
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_72
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Conv_74:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_75:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_76:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_77:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_78:
+    inputs:
+    - ref: Conv_74
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_75
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_76
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_77
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Conv_79:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_80:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_81:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_82:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_83:
+    inputs:
+    - ref: Conv_79
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_80
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_81
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_82
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Conv_84:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_85:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_86:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_87:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_88:
+    inputs:
+    - ref: Conv_84
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_85
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_86
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_87
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Conv_89:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_90:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_91:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_92:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_93:
+    inputs:
+    - ref: Conv_89
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_90
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_91
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_92
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Conv_94:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_95:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_96:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_97:
+    inputs:
+    - ref: Split_58
+      channel: 64
+      width: 4
+      height: 4
+    outputs:
+    - channel: 128
+      width: 4
+      height: 4
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_98:
+    inputs:
+    - ref: Conv_94
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_95
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_96
+      channel: 128
+      width: 4
+      height: 4
+    - ref: Conv_97
+      channel: 128
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: concat
+      axis: 1
+  Add_99:
+    inputs:
+    - ref: Concat_63
+      channel: 512
+      width: 4
+      height: 4
+    - ref: Concat_68
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: add
+  Add_100:
+    inputs:
+    - ref: Add_99
+      channel: 512
+      width: 4
+      height: 4
+    - ref: Concat_73
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: add
+  Add_101:
+    inputs:
+    - ref: Add_100
+      channel: 512
+      width: 4
+      height: 4
+    - ref: Concat_78
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: add
+  Add_102:
+    inputs:
+    - ref: Add_101
+      channel: 512
+      width: 4
+      height: 4
+    - ref: Concat_83
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: add
+  Add_103:
+    inputs:
+    - ref: Add_102
+      channel: 512
+      width: 4
+      height: 4
+    - ref: Concat_88
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: add
+  Add_104:
+    inputs:
+    - ref: Add_103
+      channel: 512
+      width: 4
+      height: 4
+    - ref: Concat_93
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: add
+  Add_105:
+    inputs:
+    - ref: Add_104
+      channel: 512
+      width: 4
+      height: 4
+    - ref: Concat_98
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: add
+  Relu_106:
+    inputs:
+    - ref: Add_105
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 4
+      height: 4
+    op:
+      op_id: relu
+  MaxPool_107:
+    inputs:
+    - ref: Relu_106
+      channel: 512
+      width: 4
+      height: 4
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: maxpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Split_108:
+    inputs:
+    - ref: MaxPool_107
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    op:
+      op_id: Split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+  Conv_109:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_110:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_111:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_112:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_113:
+    inputs:
+    - ref: Conv_109
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_110
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_111
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_112
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_114:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_115:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_116:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_117:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_118:
+    inputs:
+    - ref: Conv_114
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_115
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_116
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_117
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_119:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_120:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_121:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_122:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_123:
+    inputs:
+    - ref: Conv_119
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_120
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_121
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_122
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_124:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_125:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_126:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_127:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_128:
+    inputs:
+    - ref: Conv_124
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_125
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_126
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_127
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_129:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_130:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_131:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_132:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_133:
+    inputs:
+    - ref: Conv_129
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_130
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_131
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_132
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_134:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_135:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_136:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_137:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_138:
+    inputs:
+    - ref: Conv_134
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_135
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_136
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_137
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_139:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_140:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_141:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_142:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_143:
+    inputs:
+    - ref: Conv_139
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_140
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_141
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_142
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_144:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_145:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_146:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_147:
+    inputs:
+    - ref: Split_108
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_148:
+    inputs:
+    - ref: Conv_144
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_145
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_146
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_147
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Add_149:
+    inputs:
+    - ref: Concat_113
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_118
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_150:
+    inputs:
+    - ref: Add_149
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_123
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_151:
+    inputs:
+    - ref: Add_150
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_128
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_152:
+    inputs:
+    - ref: Add_151
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_133
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_153:
+    inputs:
+    - ref: Add_152
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_138
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_154:
+    inputs:
+    - ref: Add_153
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_143
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_155:
+    inputs:
+    - ref: Add_154
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_148
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Relu_156:
+    inputs:
+    - ref: Add_155
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: relu
+  Split_157:
+    inputs:
+    - ref: Relu_156
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    - channel: 64
+      width: 2
+      height: 2
+    op:
+      op_id: Split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+  Conv_158:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_159:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_160:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_161:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_162:
+    inputs:
+    - ref: Conv_158
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_159
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_160
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_161
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_163:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_164:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_165:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_166:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_167:
+    inputs:
+    - ref: Conv_163
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_164
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_165
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_166
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_168:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_169:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_170:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_171:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_172:
+    inputs:
+    - ref: Conv_168
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_169
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_170
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_171
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_173:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_174:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_175:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_176:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_177:
+    inputs:
+    - ref: Conv_173
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_174
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_175
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_176
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_178:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_179:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_180:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_181:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_182:
+    inputs:
+    - ref: Conv_178
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_179
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_180
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_181
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_183:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_184:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_185:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_186:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_187:
+    inputs:
+    - ref: Conv_183
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_184
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_185
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_186
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_188:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_189:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_190:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_191:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_192:
+    inputs:
+    - ref: Conv_188
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_189
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_190
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_191
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Conv_193:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_194:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_195:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Conv_196:
+    inputs:
+    - ref: Split_157
+      channel: 64
+      width: 2
+      height: 2
+    outputs:
+    - channel: 128
+      width: 2
+      height: 2
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  Concat_197:
+    inputs:
+    - ref: Conv_193
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_194
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_195
+      channel: 128
+      width: 2
+      height: 2
+    - ref: Conv_196
+      channel: 128
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: concat
+      axis: 1
+  Add_198:
+    inputs:
+    - ref: Concat_162
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_167
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_199:
+    inputs:
+    - ref: Add_198
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_172
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_200:
+    inputs:
+    - ref: Add_199
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_177
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_201:
+    inputs:
+    - ref: Add_200
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_182
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_202:
+    inputs:
+    - ref: Add_201
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_187
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_203:
+    inputs:
+    - ref: Add_202
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_192
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Add_204:
+    inputs:
+    - ref: Add_203
+      channel: 512
+      width: 2
+      height: 2
+    - ref: Concat_197
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: add
+  Relu_205:
+    inputs:
+    - ref: Add_204
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 2
+      height: 2
+    op:
+      op_id: relu
+  MaxPool_206:
+    inputs:
+    - ref: Relu_205
+      channel: 512
+      width: 2
+      height: 2
+    outputs:
+    - channel: 512
+      width: 1
+      height: 1
+    op:
+      op_id: maxpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Flatten_207:
+    inputs:
+    - ref: MaxPool_206
+      channel: 512
+      width: 1
+      height: 1
+    outputs:
+    - channel: 512
+      width: 1
+      height: 1
+    op:
+      op_id: flatten
+  MatMul_208:
+    inputs:
+    - ref: Flatten_207
+      channel: 512
+      width: 1
+      height: 1
+    outputs:
+    - channel: 10
+      width: 1
+      height: 1
+    weights:
+      weight:
+        shape:
+        - 10
+        - 512
+    op:
+      op_id: matmul
+      in_channel: 512
+      out_channel: 10
+      bias: false
+  graph_output:
+    type: output
+    inputs:
+    - ref: MatMul_208
+      channel: 10
+      channel_last: true
+      width: 1
+      height: 1

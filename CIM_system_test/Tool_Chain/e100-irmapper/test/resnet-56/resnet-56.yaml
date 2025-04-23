@@ -1,0 +1,4562 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - channel: 3
+      channel_last: true
+      width: 32
+      height: 32
+  Conv_0:
+    inputs:
+    - ref: graph_input:0
+      channel: 3
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 3
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 3
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 544
+        - 0
+        - 27
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_1:
+    inputs:
+    - ref: Conv_0
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_2:
+    inputs:
+    - ref: Relu_1
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 384
+        - 32
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_3:
+    inputs:
+    - ref: Conv_2
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_4:
+    inputs:
+    - ref: Relu_3
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 384
+        - 48
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_5:
+    inputs:
+    - ref: Conv_4
+      channel: 16
+      width: 32
+      height: 32
+    - ref: Relu_1
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Relu_6:
+    inputs:
+    - ref: Add_5
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_7:
+    inputs:
+    - ref: Relu_6
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 352
+        - 64
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_8:
+    inputs:
+    - ref: Conv_7
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_9:
+    inputs:
+    - ref: Relu_8
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 352
+        - 80
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_10:
+    inputs:
+    - ref: Conv_9
+      channel: 16
+      width: 32
+      height: 32
+    - ref: Relu_6
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Relu_11:
+    inputs:
+    - ref: Add_10
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_12:
+    inputs:
+    - ref: Relu_11
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 352
+        - 96
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_13:
+    inputs:
+    - ref: Conv_12
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_14:
+    inputs:
+    - ref: Relu_13
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 352
+        - 112
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_15:
+    inputs:
+    - ref: Conv_14
+      channel: 16
+      width: 32
+      height: 32
+    - ref: Relu_11
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Relu_16:
+    inputs:
+    - ref: Add_15
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_17:
+    inputs:
+    - ref: Relu_16
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 288
+        - 32
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_18:
+    inputs:
+    - ref: Conv_17
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_19:
+    inputs:
+    - ref: Relu_18
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 432
+        - 32
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_20:
+    inputs:
+    - ref: Conv_19
+      channel: 16
+      width: 32
+      height: 32
+    - ref: Relu_16
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Relu_21:
+    inputs:
+    - ref: Add_20
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_22:
+    inputs:
+    - ref: Relu_21
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 288
+        - 48
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_23:
+    inputs:
+    - ref: Conv_22
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_24:
+    inputs:
+    - ref: Relu_23
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 432
+        - 48
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_25:
+    inputs:
+    - ref: Conv_24
+      channel: 16
+      width: 32
+      height: 32
+    - ref: Relu_21
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Relu_26:
+    inputs:
+    - ref: Add_25
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_27:
+    inputs:
+    - ref: Relu_26
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 0
+        - 64
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_28:
+    inputs:
+    - ref: Conv_27
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_29:
+    inputs:
+    - ref: Relu_28
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 144
+        - 64
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_30:
+    inputs:
+    - ref: Conv_29
+      channel: 16
+      width: 32
+      height: 32
+    - ref: Relu_26
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Relu_31:
+    inputs:
+    - ref: Add_30
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_32:
+    inputs:
+    - ref: Relu_31
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 288
+        - 64
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_33:
+    inputs:
+    - ref: Conv_32
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_34:
+    inputs:
+    - ref: Relu_33
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 432
+        - 64
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_35:
+    inputs:
+    - ref: Conv_34
+      channel: 16
+      width: 32
+      height: 32
+    - ref: Relu_31
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Relu_36:
+    inputs:
+    - ref: Add_35
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_37:
+    inputs:
+    - ref: Relu_36
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 0
+        - 80
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_38:
+    inputs:
+    - ref: Conv_37
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_39:
+    inputs:
+    - ref: Relu_38
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 144
+        - 80
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_40:
+    inputs:
+    - ref: Conv_39
+      channel: 16
+      width: 32
+      height: 32
+    - ref: Relu_36
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Relu_41:
+    inputs:
+    - ref: Add_40
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_42:
+    inputs:
+    - ref: Relu_41
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 288
+        - 80
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_43:
+    inputs:
+    - ref: Conv_42
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_44:
+    inputs:
+    - ref: Relu_43
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 16
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 432
+        - 80
+        - 144
+        - 16
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_45:
+    inputs:
+    - ref: Conv_44
+      channel: 16
+      width: 32
+      height: 32
+    - ref: Relu_41
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Relu_46:
+    inputs:
+    - ref: Add_45
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 16
+      width: 32
+      height: 32
+    op:
+      op_id: relu
+  Conv_47:
+    inputs:
+    - ref: Relu_46
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 2
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 384
+        - 0
+        - 144
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_48:
+    inputs:
+    - ref: Conv_47
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_49:
+    inputs:
+    - ref: Relu_48
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 64
+        - 64
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Conv_50:
+    inputs:
+    - ref: Relu_46
+      channel: 16
+      width: 32
+      height: 32
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 16
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 32
+      bias: true
+      kernel: 1
+      stride: 2
+      padding: 0
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 528
+        - 0
+        - 16
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_51:
+    inputs:
+    - ref: Conv_49
+      channel: 32
+      width: 16
+      height: 16
+    - ref: Conv_50
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Relu_52:
+    inputs:
+    - ref: Add_51
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_53:
+    inputs:
+    - ref: Relu_52
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 64
+        - 96
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_54:
+    inputs:
+    - ref: Conv_53
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_55:
+    inputs:
+    - ref: Relu_54
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:9
+        address:
+        - 0
+        - 64
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_56:
+    inputs:
+    - ref: Conv_55
+      channel: 32
+      width: 16
+      height: 16
+    - ref: Relu_52
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Relu_57:
+    inputs:
+    - ref: Add_56
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_58:
+    inputs:
+    - ref: Relu_57
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:9
+        address:
+        - 288
+        - 64
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_59:
+    inputs:
+    - ref: Conv_58
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_60:
+    inputs:
+    - ref: Relu_59
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:9
+        address:
+        - 0
+        - 96
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_61:
+    inputs:
+    - ref: Conv_60
+      channel: 32
+      width: 16
+      height: 16
+    - ref: Relu_57
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Relu_62:
+    inputs:
+    - ref: Add_61
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_63:
+    inputs:
+    - ref: Relu_62
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:9
+        address:
+        - 288
+        - 96
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_64:
+    inputs:
+    - ref: Conv_63
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_65:
+    inputs:
+    - ref: Relu_64
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:10
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_66:
+    inputs:
+    - ref: Conv_65
+      channel: 32
+      width: 16
+      height: 16
+    - ref: Relu_62
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Relu_67:
+    inputs:
+    - ref: Add_66
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_68:
+    inputs:
+    - ref: Relu_67
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:10
+        address:
+        - 288
+        - 0
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_69:
+    inputs:
+    - ref: Conv_68
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_70:
+    inputs:
+    - ref: Relu_69
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:10
+        address:
+        - 0
+        - 32
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_71:
+    inputs:
+    - ref: Conv_70
+      channel: 32
+      width: 16
+      height: 16
+    - ref: Relu_67
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Relu_72:
+    inputs:
+    - ref: Add_71
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_73:
+    inputs:
+    - ref: Relu_72
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:10
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_74:
+    inputs:
+    - ref: Conv_73
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_75:
+    inputs:
+    - ref: Relu_74
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:10
+        address:
+        - 0
+        - 64
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_76:
+    inputs:
+    - ref: Conv_75
+      channel: 32
+      width: 16
+      height: 16
+    - ref: Relu_72
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Relu_77:
+    inputs:
+    - ref: Add_76
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_78:
+    inputs:
+    - ref: Relu_77
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:10
+        address:
+        - 288
+        - 64
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_79:
+    inputs:
+    - ref: Conv_78
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_80:
+    inputs:
+    - ref: Relu_79
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:10
+        address:
+        - 0
+        - 96
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_81:
+    inputs:
+    - ref: Conv_80
+      channel: 32
+      width: 16
+      height: 16
+    - ref: Relu_77
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Relu_82:
+    inputs:
+    - ref: Add_81
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_83:
+    inputs:
+    - ref: Relu_82
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:10
+        address:
+        - 288
+        - 96
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_84:
+    inputs:
+    - ref: Conv_83
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_85:
+    inputs:
+    - ref: Relu_84
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_86:
+    inputs:
+    - ref: Conv_85
+      channel: 32
+      width: 16
+      height: 16
+    - ref: Relu_82
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Relu_87:
+    inputs:
+    - ref: Add_86
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_88:
+    inputs:
+    - ref: Relu_87
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 288
+        - 0
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_89:
+    inputs:
+    - ref: Conv_88
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_90:
+    inputs:
+    - ref: Relu_89
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:11
+        address:
+        - 0
+        - 32
+        - 288
+        - 32
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_91:
+    inputs:
+    - ref: Conv_90
+      channel: 32
+      width: 16
+      height: 16
+    - ref: Relu_87
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Relu_92:
+    inputs:
+    - ref: Add_91
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 32
+      width: 16
+      height: 16
+    op:
+      op_id: relu
+  Conv_93:
+    inputs:
+    - ref: Relu_92
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 32
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 2
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 64
+        - 0
+        - 288
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_94:
+    inputs:
+    - ref: Conv_93
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_95:
+    inputs:
+    - ref: Relu_94
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:1
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Conv_96:
+    inputs:
+    - ref: Relu_92
+      channel: 32
+      width: 16
+      height: 16
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 32
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 64
+      bias: true
+      kernel: 1
+      stride: 2
+      padding: 0
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 352
+        - 0
+        - 32
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_97:
+    inputs:
+    - ref: Conv_95
+      channel: 64
+      width: 8
+      height: 8
+    - ref: Conv_96
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Relu_98:
+    inputs:
+    - ref: Add_97
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_99:
+    inputs:
+    - ref: Relu_98
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:1
+        address:
+        - 0
+        - 64
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_100:
+    inputs:
+    - ref: Conv_99
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_101:
+    inputs:
+    - ref: Relu_100
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:2
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_102:
+    inputs:
+    - ref: Conv_101
+      channel: 64
+      width: 8
+      height: 8
+    - ref: Relu_98
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Relu_103:
+    inputs:
+    - ref: Add_102
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_104:
+    inputs:
+    - ref: Relu_103
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:2
+        address:
+        - 0
+        - 64
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_105:
+    inputs:
+    - ref: Conv_104
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_106:
+    inputs:
+    - ref: Relu_105
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:3
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_107:
+    inputs:
+    - ref: Conv_106
+      channel: 64
+      width: 8
+      height: 8
+    - ref: Relu_103
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Relu_108:
+    inputs:
+    - ref: Add_107
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_109:
+    inputs:
+    - ref: Relu_108
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:3
+        address:
+        - 0
+        - 64
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_110:
+    inputs:
+    - ref: Conv_109
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_111:
+    inputs:
+    - ref: Relu_110
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:4
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  AveragePool_140:
+    inputs:
+    - ref: Relu_138
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 1
+      height: 1
+    op:
+      op_id: avgpool2d
+      kernel: 8
+      stride: 8
+      padding: 0
+  Add_112:
+    inputs:
+    - ref: Conv_111
+      channel: 64
+      width: 8
+      height: 8
+    - ref: Relu_108
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Relu_113:
+    inputs:
+    - ref: Add_112
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_114:
+    inputs:
+    - ref: Relu_113
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:4
+        address:
+        - 0
+        - 64
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_115:
+    inputs:
+    - ref: Conv_114
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_116:
+    inputs:
+    - ref: Relu_115
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:5
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_117:
+    inputs:
+    - ref: Conv_116
+      channel: 64
+      width: 8
+      height: 8
+    - ref: Relu_113
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Relu_118:
+    inputs:
+    - ref: Add_117
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_119:
+    inputs:
+    - ref: Relu_118
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:5
+        address:
+        - 0
+        - 64
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_120:
+    inputs:
+    - ref: Conv_119
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_121:
+    inputs:
+    - ref: Relu_120
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:6
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_122:
+    inputs:
+    - ref: Conv_121
+      channel: 64
+      width: 8
+      height: 8
+    - ref: Relu_118
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Relu_123:
+    inputs:
+    - ref: Add_122
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_124:
+    inputs:
+    - ref: Relu_123
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:6
+        address:
+        - 0
+        - 64
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_125:
+    inputs:
+    - ref: Conv_124
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_126:
+    inputs:
+    - ref: Relu_125
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:7
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_127:
+    inputs:
+    - ref: Conv_126
+      channel: 64
+      width: 8
+      height: 8
+    - ref: Relu_123
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Relu_128:
+    inputs:
+    - ref: Add_127
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_129:
+    inputs:
+    - ref: Relu_128
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:7
+        address:
+        - 0
+        - 64
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_130:
+    inputs:
+    - ref: Conv_129
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_131:
+    inputs:
+    - ref: Relu_130
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:8
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_132:
+    inputs:
+    - ref: Conv_131
+      channel: 64
+      width: 8
+      height: 8
+    - ref: Relu_128
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Relu_133:
+    inputs:
+    - ref: Add_132
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_134:
+    inputs:
+    - ref: Relu_133
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:8
+        address:
+        - 0
+        - 64
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_135:
+    inputs:
+    - ref: Conv_134
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Conv_136:
+    inputs:
+    - ref: Relu_135
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 1
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:9
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Add_137:
+    inputs:
+    - ref: Conv_136
+      channel: 64
+      width: 8
+      height: 8
+    - ref: Relu_133
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: add
+  Relu_138:
+    inputs:
+    - ref: Add_137
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    op:
+      op_id: relu
+  Flatten_141:
+    inputs:
+    - ref: AveragePool_140
+      channel: 64
+      width: 1
+      height: 1
+    outputs:
+    - channel: 64
+      width: 1
+      height: 1
+    op:
+      op_id: flatten
+  Gemm_142:
+    inputs:
+    - ref: Flatten_141
+      channel: 64
+      width: 1
+      height: 1
+    outputs:
+    - channel: 100
+      width: 1
+      height: 1
+    weights:
+      weight:
+        shape:
+        - 100
+        - 64
+    op:
+      op_id: matmul
+      in_channel: 64
+      out_channel: 100
+      bias: false
+    c200_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      runtime: simulation
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: c200-0.rram-144k-cluster:0
+        address:
+        - 0
+        - 0
+        - 64
+        - 100
+    c200_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  graph_output:
+    type: output
+    inputs:
+    - ref: Gemm_142
+      channel: 100
+      channel_last: true
+      width: 1
+      height: 1
+devices:
+  c200-0:
+    kind: rram-144k-cluster
+    number: 20
+    profile:
+      in_channel: 576
+      out_channel: 128
+      in_bits: 2
+      out_bits: 4
+      weight_bits: 4
+      signed: true
+    ip: 192.168.2.97

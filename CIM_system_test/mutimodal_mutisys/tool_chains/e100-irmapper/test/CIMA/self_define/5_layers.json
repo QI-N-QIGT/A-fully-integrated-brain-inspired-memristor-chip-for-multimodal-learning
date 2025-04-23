@@ -1,0 +1,378 @@
+{
+    "Log_Level": 0,
+    "Trace_Enable": true,
+    "Perf_Single_Trace": false,
+    "Log_Action": 4,
+    "Run_Time": 1000000,
+    "Global_Batch": 1,
+    "HOSTI": {
+        "Thread_0": {
+            "Task_Name": "Input",
+            "Vld": true,
+            "CPU_Base": 0,
+            "CPU_Size": 774400,
+            "Dmem_Base": 0,
+            "Dmem_Size": 24200,
+            "Credit_Pix_Len": 110,
+            "Conv_Struct": {
+                "fout_width": 110,
+                "fout_height": 110,
+                "cout": 64,
+                "batch": 1
+            },
+            "Op_Code": "WriteIn",
+            "Dst": {
+                "seg_0": {
+                    "core": "Core1_0",
+                    "tid": 0
+                }
+            }
+        },
+        "Thread_1": {
+            "Task_Name": "Output",
+            "Vld": true,
+            "CPU_Base": 0,
+            "CPU_Size": 774400,
+            "Dmem_Base": 24200,
+            "Dmem_Size": 774400,
+            "Credit_Pix_Len": 110,
+            "Conv_Struct": {
+                "fin_width": 110,
+                "fin_height": 110,
+                "cin": 64,
+                "batch": 1
+            },
+            "Op_Code": "WriteOut",
+            "Src": {
+                "src_0": {
+                    "core": "Core2_0",
+                    "tid": 0
+                }
+            }
+        }
+    },
+    "Core0_0": {
+        "Thread_0": {
+            "Task_Name": "Conv_0",
+            "Vld": true,
+            "Dmem_Base": 0,
+            "Dmem_Size": 1568,
+            "Credit_Pix_Len": 110,
+            "Conv_Struct": {
+                "fin_width": 110,
+                "fin_height": 110,
+                "cin": 64,
+                "activation_type": 1,
+                "batch": 1,
+                "cout": 64,
+                "k_size": 3,
+                "padding": 1,
+                "stride": 1,
+                "rela_pe": 1,
+                "lpe": [
+                    0
+                ]
+            },
+            "Op_Code": "PEConv",
+            "Src": {
+                "src_0": {
+                    "core": "Core1_0",
+                    "tid": 0
+                }
+            },
+            "Dst": {
+                "seg_0": {
+                    "core": "Core0_1",
+                    "tid": 0,
+                    "da_pe_id": 0
+                }
+            }
+        },
+        "Thread_1": {
+            "Task_Name": "Conv_1",
+            "Vld": true,
+            "Dmem_Base": 660,
+            "Dmem_Size": 660,
+            "Credit_Pix_Len": 110,
+            "Conv_Struct": {
+                "fin_width": 110,
+                "fin_height": 110,
+                "cin": 64,
+                "activation_type": 1,
+                "batch": 1,
+                "cout": 64,
+                "k_size": 3,
+                "padding": 1,
+                "stride": 1,
+                "rela_pe": 2,
+                "lpe": [
+                    0
+                ]
+            },
+            "Op_Code": "PEConv",
+            "Src": {
+                "src_0": {
+                    "core": "Core1_0",
+                    "tid": 0
+                }
+            },
+            "Dst": {
+                "seg_0": {
+                    "core": "Core0_1",
+                    "tid": 0,
+                    "da_pe_id": 1
+                }
+            }
+        },
+        "Thread_2": {
+            "Task_Name": "Conv_3",
+            "Vld": true,
+            "Dmem_Base": 1320,
+            "Dmem_Size": 660,
+            "Credit_Pix_Len": 110,
+            "Conv_Struct": {
+                "fin_width": 110,
+                "fin_height": 110,
+                "cin": 64,
+                "activation_type": 1,
+                "batch": 1,
+                "cout": 64,
+                "k_size": 3,
+                "padding": 1,
+                "stride": 1,
+                "rela_pe": 0,
+                "lpe": [
+                    0
+                ]
+            },
+            "Op_Code": "PEConv",
+            "Src": {
+                "src_0": {
+                    "core": "Core1_0",
+                    "tid": 0
+                }
+            },
+            "Dst": {
+                "seg_0": {
+                    "core": "Core0_1",
+                    "tid": 0,
+                    "da_pe_id": 2
+                }
+            }
+        }
+    },
+    "Core0_1": {
+        "Thread_0": {
+            "Task_Name": "Concat_0",
+            "Vld": true,
+            "Dmem_Base": 440,
+            "Dmem_Size": 220,
+            "Credit_Pix_Len": 110,
+            "Conv_Struct": {
+                "fin_width": 110,
+                "fin_height": 110,
+                "cin": 64,
+                "activation_type": 0,
+                "batch": 1,
+                "cout": 64,
+                "k_size": 1,
+                "padding": 0,
+                "stride": 1,
+                "rela_pe": 0,
+                "lpe": [
+                    0
+                ]
+            },
+            "Op_Code": "Transfer",
+            "Src": {
+                "src_0": {
+                    "core": "Core0_0",
+                    "tid": 0,
+                    "da_pe_id": 0
+                },
+                "src_1": {
+                    "core": "Core0_0",
+                    "tid": 1,
+                    "da_pe_id": 1
+                },
+                "src_2": {
+                    "core": "Core0_0",
+                    "tid": 2,
+                    "da_pe_id": 2
+                }
+            },
+            "Dst": {
+                "seg_0": {
+                    "core": "Core1_0",
+                    "tid": 1
+                },
+                "seg_1": {
+                    "core": "Core1_0",
+                    "tid": 2
+                }
+            }
+        }
+    },
+    "Core1_0": {
+        "Thread_0": {
+            "Task_Name": "Identity_0",
+            "Vld": true,
+            "Dmem_Base": 0,
+            "Dmem_Size": 220,
+            "Credit_Pix_Len": 110,
+            "Conv_Struct": {
+                "fin_width": 110,
+                "fin_height": 110,
+                "cin": 64,
+                "activation_type": 0,
+                "batch": 1,
+                "cout": 64,
+                "k_size": 1,
+                "padding": 0,
+                "stride": 1,
+                "rela_pe": 0,
+                "lpe": [
+                    0
+                ]
+            },
+            "Op_Code": "Transfer",
+            "Src": {
+                "src_0": {
+                    "core": "HOSTI",
+                    "tid": 0
+                }
+            },
+            "Dst": {
+                "seg_0": {
+                    "mcast_0": {
+                        "core": "Core0_0",
+                        "tid": 0
+                    },
+                    "mcast_1": {
+                        "core": "Core0_0",
+                        "tid": 1
+                    },
+                    "mcast_2": {
+                        "core": "Core0_0",
+                        "tid": 2
+                    }
+                }
+            }
+        },
+        "Thread_1": {
+            "Task_Name": "Conv_6",
+            "Vld": true,
+            "Dmem_Base": 220,
+            "Dmem_Size": 660,
+            "Credit_Pix_Len": 110,
+            "Conv_Struct": {
+                "fin_width": 110,
+                "fin_height": 110,
+                "cin": 64,
+                "activation_type": 1,
+                "batch": 1,
+                "cout": 64,
+                "k_size": 3,
+                "padding": 1,
+                "stride": 1,
+                "rela_pe": 3,
+                "lpe": [
+                    0
+                ]
+            },
+            "Op_Code": "PEConv",
+            "Src": {
+                "src_0": {
+                    "core": "Core0_1",
+                    "tid": 0
+                }
+            },
+            "Dst": {
+                "seg_0": {
+                    "core": "Core2_0",
+                    "tid": 0,
+                    "rdc_pe_id": 0
+                }
+            }
+        },
+        "Thread_2": {
+            "Task_Name": "Conv_7",
+            "Vld": true,
+            "Dmem_Base": 880,
+            "Dmem_Size": 660,
+            "Credit_Pix_Len": 110,
+            "Conv_Struct": {
+                "fin_width": 110,
+                "fin_height": 110,
+                "cin": 64,
+                "activation_type": 1,
+                "batch": 1,
+                "cout": 64,
+                "k_size": 3,
+                "padding": 1,
+                "stride": 1,
+                "rela_pe": 0,
+                "lpe": [
+                    0
+                ]
+            },
+            "Op_Code": "PEConv",
+            "Src": {
+                "src_0": {
+                    "core": "Core0_1",
+                    "tid": 0
+                }
+            },
+            "Dst": {
+                "seg_0": {
+                    "core": "Core2_0",
+                    "tid": 0,
+                    "rdc_pe_id": 1
+                }
+            }
+        }
+    },
+    "Core2_0": {
+        "Thread_0": {
+            "Task_Name": "Add_0",
+            "Vld": true,
+            "Dmem_Base": 220,
+            "Dmem_Size": 220,
+            "Credit_Pix_Len": 110,
+            "Conv_Struct": {
+                "fin_width": 110,
+                "fin_height": 110,
+                "cin": 64,
+                "activation_type": 0,
+                "batch": 1,
+                "cout": 64,
+                "k_size": 1,
+                "padding": 0,
+                "stride": 1,
+                "rela_pe": 0,
+                "lpe": [
+                    0
+                ]
+            },
+            "Op_Code": "Transfer",
+            "Src": {
+                "src_0": {
+                    "core": "Core1_0",
+                    "tid": 1,
+                    "rdc_pe_id": 0
+                },
+                "src_1": {
+                    "core": "Core1_0",
+                    "tid": 2,
+                    "rdc_pe_id": 1
+                }
+            },
+            "Dst": {
+                "seg_0": {
+                    "core": "HOSTI",
+                    "tid": 1
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,541 @@
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - channel: 1
+      channel_last: true
+      width: 28
+      height: 28
+  Conv_0:
+    inputs:
+    - ref: graph_input:0
+      channel: 1
+      width: 28
+      height: 28
+    outputs:
+    - channel: 32
+      width: 13
+      height: 13
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 1
+        - 3
+        - 3
+    op:
+      relu:
+        op_id: relu
+      pool:
+        op_id: maxpool2d
+        kernel: 2
+        stride: 2
+        padding: 0
+      op_id: fused_conv2d
+      in_channel: 1
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 1
+      padding: 0
+    a111_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      input_tile_buffer_addr:
+      - 0
+      - 784
+      output_tile_buffer_addr:
+      - 0
+      - 5408
+      in_buf_type: 0
+      out_buf_type: 0
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:0.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 9
+        - 32
+    a111_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      adc_range: 1
+      relu_threshold: 0
+      shift_num: 0
+  Conv_3:
+    inputs:
+    - ref: Conv_0
+      channel: 32
+      width: 13
+      height: 13
+    outputs:
+    - channel: 32
+      width: 3
+      height: 3
+    weights:
+      bias:
+        shape:
+        - 32
+      weight:
+        shape:
+        - 32
+        - 32
+        - 3
+        - 3
+    op:
+      relu:
+        op_id: relu
+      pool:
+        op_id: maxpool2d
+        kernel: 2
+        stride: 2
+        padding: 0
+      op_id: fused_conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: true
+      kernel: 3
+      stride: 2
+      padding: 0
+    a111_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      input_tile_buffer_addr:
+      - 2048
+      - 5408
+      in_buf_type: 2
+      out_buf_type: 2
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:0.a111-xb:2
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+    a111_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      adc_range: 1
+      relu_threshold: 0
+      shift_num: 0
+  Reshape_6:
+    inputs:
+    - ref: Conv_3
+      channel: 32
+      width: 3
+      height: 3
+    outputs:
+    - channel: 288
+      width: 1
+      height: 1
+    op:
+      op_id: reshape
+      shape:
+      - 1
+      - -1
+  Gemm_7:
+    inputs:
+    - ref: Reshape_6
+      channel: 288
+      width: 1
+      height: 1
+    outputs:
+    - channel: 48
+      width: 1
+      height: 1
+    weights:
+      bias:
+        shape:
+        - 48
+      weight:
+        shape:
+        - 48
+        - 288
+    op:
+      relu:
+        op_id: relu
+      op_id: fused_fc
+      in_channel: 288
+      out_channel: 48
+      bias: true
+    a111_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      input_tile_buffer_addr:
+      - 0
+      - 288
+      output_tile_buffer_addr:
+      - 0
+      - 48
+      in_buf_type: 0
+      out_buf_type: 0
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:1.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 288
+        - 48
+    a111_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      adc_range: 1
+      relu_threshold: 0
+      shift_num: 0
+  Gemm_9:
+    inputs:
+    - ref: Gemm_7
+      channel: 48
+      width: 1
+      height: 1
+    outputs:
+    - channel: 10
+      width: 1
+      height: 1
+    weights:
+      bias:
+        shape:
+        - 10
+      weight:
+        shape:
+        - 10
+        - 48
+    op:
+      op_id: matmul
+      in_channel: 48
+      out_channel: 10
+      bias: true
+    a111_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      input_tile_buffer_addr:
+      - 2048
+      - 48
+      in_buf_type: 0
+      out_buf_type: 0
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:1.a111-xb:2
+        address:
+        - 0
+        - 0
+        - 48
+        - 10
+    a111_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      adc_range: 1
+      relu_threshold: 0
+      shift_num: 0
+  graph_output:
+    type: output
+    inputs:
+    - ref: Gemm_9
+      channel: 10
+      channel_last: true
+      width: 1
+      height: 1
+ir_version: e100-ir-1
+devices:
+  a111-0:
+    devices:
+      a111-tile:0:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 1
+          pool1_en: 1
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr:
+          - 0
+          - 784
+          out_esram_addr:
+          - 1024
+          - 288
+          op_list:
+          - Conv_0
+          - Conv_3
+      a111-tile:1:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr:
+          - 1536
+          - 288
+          out_esram_addr:
+          - 2048
+          - 10
+          op_list:
+          - Gemm_7
+          - Gemm_9
+      a111-tile:2:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:3:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:4:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:5:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:6:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:7:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:8:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:9:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:10:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:11:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      mcu:
+        kind: a111-mcu
+    kind: a111-npu
+    ip: 192.168.2.5

@@ -1,0 +1,8 @@
+*.np
+*.th
+*.tf
+ir_*.yaml
+*.png
+*.pdf
+_*.*
+*.dot

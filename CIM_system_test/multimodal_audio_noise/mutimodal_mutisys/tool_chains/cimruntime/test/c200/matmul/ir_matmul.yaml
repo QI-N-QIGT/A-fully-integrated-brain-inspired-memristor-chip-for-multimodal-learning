@@ -1,0 +1,23 @@
+ir-version: e100-ir-1
+layers:
+  inp:
+    type: input
+    inputs:
+      - dtype: uint8
+  fc:
+    op:
+      op_id: matmul
+      in_channel: 64
+      out_channel: 10
+      bias: false
+    inputs: [inp]
+    weights:
+      weight:
+        shape: [10, 64]
+    outputs:
+    - height: 1
+      width: 1
+      channel: 10
+  out:
+    type: output
+    inputs: [fc]

@@ -1,0 +1,708 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - height: 32
+      width: 32
+      channel: 3
+      channel_last: true
+  Conv_0:
+    inputs:
+    - height: 32
+      width: 32
+      ref: graph_input:0
+      channel: 3
+    outputs:
+    - height: 28
+      width: 28
+      channel: 6
+    op:
+      op_id: conv2d
+      in_channel: 3
+      out_channel: 6
+      bias: false
+      kernel: 5
+      stride: 1
+      padding: 0
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 37
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:0.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 1
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:0.a111-xb:1
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 2
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:0.a111-xb:2
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 3
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:0.a111-xb:3
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 4
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:0.a111-xb:4
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 5
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:0.a111-xb:5
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 6
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:0.a111-xb:6
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 7
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:0.a111-xb:7
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 8
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:1.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 9
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:1.a111-xb:1
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 10
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:1.a111-xb:2
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 11
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:1.a111-xb:3
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 12
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:1.a111-xb:4
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 13
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:1.a111-xb:5
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 14
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:1.a111-xb:6
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 15
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:1.a111-xb:7
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 16
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:2.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 17
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:2.a111-xb:1
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 18
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:2.a111-xb:2
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 19
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:2.a111-xb:3
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 20
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:2.a111-xb:4
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 21
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:2.a111-xb:5
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 22
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:2.a111-xb:6
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 23
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:2.a111-xb:7
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 24
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:3.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 25
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:3.a111-xb:1
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 26
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:3.a111-xb:2
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 27
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:3.a111-xb:3
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 28
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:3.a111-xb:4
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 29
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:3.a111-xb:5
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 30
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:3.a111-xb:6
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 31
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:3.a111-xb:7
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 32
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:4.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 33
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:4.a111-xb:1
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 34
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:4.a111-xb:2
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 35
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:4.a111-xb:3
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+      - index:
+        - 36
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:4.a111-xb:4
+        address:
+        - 0
+        - 0
+        - 75
+        - 6
+  Relu_1:
+    inputs:
+    - height: 28
+      width: 28
+      ref: Conv_0
+      channel: 6
+    outputs:
+    - height: 28
+      width: 28
+      channel: 6
+    op:
+      op_id: relu
+  MaxPool_2:
+    inputs:
+    - height: 28
+      width: 28
+      ref: Relu_1
+      channel: 6
+    outputs:
+    - height: 14
+      width: 14
+      channel: 6
+    op:
+      op_id: maxpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Conv_3:
+    inputs:
+    - height: 14
+      width: 14
+      ref: MaxPool_2
+      channel: 6
+    outputs:
+    - height: 10
+      width: 10
+      channel: 16
+    op:
+      op_id: conv2d
+      in_channel: 6
+      out_channel: 16
+      bias: false
+      kernel: 5
+      stride: 1
+      padding: 0
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 8
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:4.a111-xb:5
+        address:
+        - 0
+        - 0
+        - 150
+        - 16
+      - index:
+        - 1
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:4.a111-xb:6
+        address:
+        - 0
+        - 0
+        - 150
+        - 16
+      - index:
+        - 2
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:4.a111-xb:7
+        address:
+        - 0
+        - 0
+        - 150
+        - 16
+      - index:
+        - 3
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:5.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 150
+        - 16
+      - index:
+        - 4
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:5.a111-xb:1
+        address:
+        - 0
+        - 0
+        - 150
+        - 16
+      - index:
+        - 5
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:5.a111-xb:2
+        address:
+        - 0
+        - 0
+        - 150
+        - 16
+      - index:
+        - 6
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:5.a111-xb:3
+        address:
+        - 0
+        - 0
+        - 150
+        - 16
+      - index:
+        - 7
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:5.a111-xb:4
+        address:
+        - 0
+        - 0
+        - 150
+        - 16
+  Relu_4:
+    inputs:
+    - height: 10
+      width: 10
+      ref: Conv_3
+      channel: 16
+    outputs:
+    - height: 10
+      width: 10
+      channel: 16
+    op:
+      op_id: relu
+  MaxPool_5:
+    inputs:
+    - height: 10
+      width: 10
+      ref: Relu_4
+      channel: 16
+    outputs:
+    - height: 5
+      width: 5
+      channel: 16
+    op:
+      op_id: maxpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Flatten_6:
+    inputs:
+    - height: 5
+      width: 5
+      ref: MaxPool_5
+      channel: 16
+    outputs:
+    - height: 1
+      width: 1
+      channel: 400
+    op:
+      op_id: flatten
+  MatMul_7:
+    inputs:
+    - ref: Flatten_6
+      channel: 400
+    outputs:
+    - height: 1
+      width: 1
+      channel: 120
+    op:
+      op_id: matmul
+      in_channel: 400
+      out_channel: 120
+      bias: false
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:5.a111-xb:5
+        address:
+        - 0
+        - 0
+        - 400
+        - 120
+  Relu_8:
+    inputs:
+    - ref: MatMul_7
+      channel: 120
+    outputs:
+    - height: 1
+      width: 1
+      channel: 120
+    op:
+      op_id: relu
+  MatMul_9:
+    inputs:
+    - ref: Relu_8
+      channel: 120
+    outputs:
+    - height: 1
+      width: 1
+      channel: 84
+    op:
+      op_id: matmul
+      in_channel: 120
+      out_channel: 84
+      bias: false
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:5.a111-xb:6
+        address:
+        - 0
+        - 0
+        - 120
+        - 84
+  Relu_10:
+    inputs:
+    - ref: MatMul_9
+      channel: 84
+    outputs:
+    - height: 1
+      width: 1
+      channel: 84
+    op:
+      op_id: relu
+  MatMul_11:
+    inputs:
+    - ref: Relu_10
+      channel: 84
+    outputs:
+    - height: 1
+      width: 1
+      channel: 10
+    op:
+      op_id: matmul
+      in_channel: 84
+      out_channel: 10
+      bias: false
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-npu:0.a111-tile:5.a111-xb:7
+        address:
+        - 0
+        - 0
+        - 84
+        - 10
+  graph_output:
+    type: output
+    inputs:
+    - height: 1
+      width: 1
+      ref: MatMul_11
+      channel: 10
+      channel_last: true
+devices:
+  a111:
+    devices:
+      tile:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 8
+            profile:
+              in_channel: 512
+              out_channel: 512
+              in_bits: 5
+              out_bits: 5
+              weight_bits: 4
+              signed: true
+          adder:
+            kind: adder
+          pooler:
+            kind: pooler
+        kind: a111-tile
+        number: 6
+      mcu:
+        kind: a111-mcu
+    kind: a111-npu
+    number: 1

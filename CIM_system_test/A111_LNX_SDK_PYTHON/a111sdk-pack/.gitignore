@@ -1,0 +1,9 @@
+/build
+/dist
+/tmp*
+*.pyc
+__pycache__
+*.egg-info
+*.np
+*.png
+*.npy

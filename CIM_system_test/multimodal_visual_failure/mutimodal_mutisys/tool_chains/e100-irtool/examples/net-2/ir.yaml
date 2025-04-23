@@ -1,0 +1,91 @@
+ir-version: e100-ir-1
+layers:
+  output:
+    type: output
+    inputs: [fc]
+  res:
+    type: block
+    inputs:
+      - conv0
+    number: 5
+    layers:
+      in:
+        type: input
+        inputs:
+          - channel: 64
+      out:
+        type: output
+        inputs:
+          - pool
+      conv1:
+        op:
+          op_id: conv2d
+          in_channel: 64
+          out_channel: 64
+          kernel: 3
+          padding: 1
+        inputs:
+          - in
+      relu1:
+        op: relu
+        inputs:
+          - conv1
+      conv2:
+        op:
+          op_id: conv2d
+          in_channel: 64
+          out_channel: 64
+          kernel: 1
+        inputs:
+          - relu1
+      relu2:
+        op: relu
+        inputs:
+          - conv2
+      conv3:
+        op:
+          op_id: conv2d
+          in_channel: 64
+          out_channel: 64
+          kernel: 1
+        inputs:
+          - in
+      relu3:
+        op: relu
+        inputs:
+          - conv3
+      add:
+        op: add
+        inputs:
+          - relu2
+          - relu3
+      pool:
+        op:
+          op_id: max_pool2d
+          kernel: 2
+        inputs:
+          - add
+  fc:
+    inputs: [flat]
+    op:
+      op_id: linear
+      in_channel: 64
+      out_channel: 10
+  conv0:
+    inputs: [input]
+    op:
+      op_id: conv2d
+      in_channel: 3
+      out_channel: 64
+      kernel: 3
+      padding: 1
+  flat:
+    op: flatten
+    inputs:
+      - res
+  input:
+    type: input
+    inputs:
+      - channel: 3
+        dims: [32, 32]
+

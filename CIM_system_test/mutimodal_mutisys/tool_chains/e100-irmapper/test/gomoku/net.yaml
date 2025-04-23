@@ -1,0 +1,628 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - height: 8
+      width: 8
+      channel: 4
+      channel_last: true
+  Conv_0:
+    inputs:
+    - height: 8
+      width: 8
+      ref: graph_input:0
+      channel: 4
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 4
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 0
+        - 0
+        - 36
+        - 32
+  Constant_1:
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: constant
+  Add_2:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Conv_0
+      channel: 32
+    - height: 8
+      width: 8
+      ref: Constant_1
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: add
+  Relu_3:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Add_2
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: relu
+  Conv_4:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Relu_3
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 64
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 36
+        - 32
+        - 288
+        - 64
+  Constant_5:
+    outputs:
+    - height: 8
+      width: 8
+      channel: 64
+    op:
+      op_id: constant
+  Add_6:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Conv_4
+      channel: 64
+    - height: 8
+      width: 8
+      ref: Constant_5
+      channel: 64
+    outputs:
+    - height: 8
+      width: 8
+      channel: 64
+    op:
+      op_id: add
+  Relu_7:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Add_6
+      channel: 64
+    outputs:
+    - height: 8
+      width: 8
+      channel: 64
+    op:
+      op_id: relu
+  Conv_8:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Relu_7
+      channel: 64
+    outputs:
+    - height: 8
+      width: 8
+      channel: 128
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:1
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:2
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+      - index:
+        - 2
+        - 0
+        - 0
+        device: rram-144k:3
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+      - index:
+        - 3
+        - 0
+        - 0
+        device: rram-144k:4
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+      - index:
+        - 4
+        - 0
+        - 0
+        device: rram-144k:5
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+      - index:
+        - 5
+        - 0
+        - 0
+        device: rram-144k:6
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+      - index:
+        - 6
+        - 0
+        - 0
+        device: rram-144k:7
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+  Constant_9:
+    outputs:
+    - height: 8
+      width: 8
+      channel: 128
+    op:
+      op_id: constant
+  Add_10:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Conv_8
+      channel: 128
+    - height: 8
+      width: 8
+      ref: Constant_9
+      channel: 128
+    outputs:
+    - height: 8
+      width: 8
+      channel: 128
+    op:
+      op_id: add
+  Relu_11:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Add_10
+      channel: 128
+    outputs:
+    - height: 8
+      width: 8
+      channel: 128
+    op:
+      op_id: relu
+  Conv_12:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Relu_11
+      channel: 128
+    outputs:
+    - height: 8
+      width: 8
+      channel: 4
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 4
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 324
+        - 96
+        - 128
+        - 4
+  Constant_13:
+    outputs:
+    - height: 8
+      width: 8
+      channel: 4
+    op:
+      op_id: constant
+  Add_14:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Conv_12
+      channel: 4
+    - height: 8
+      width: 8
+      ref: Constant_13
+      channel: 4
+    outputs:
+    - height: 8
+      width: 8
+      channel: 4
+    op:
+      op_id: add
+  Relu_15:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Add_14
+      channel: 4
+    outputs:
+    - height: 8
+      width: 8
+      channel: 4
+    op:
+      op_id: relu
+  Flatten_16:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Relu_15
+      channel: 4
+    outputs:
+    - height: 1
+      width: 1
+      channel: 256
+    op:
+      op_id: flatten
+  MatMul_17:
+    inputs:
+    - ref: Flatten_16
+      channel: 256
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: matmul
+      in_channel: 256
+      out_channel: 64
+      bias: false
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:8
+        address:
+        - 0
+        - 0
+        - 256
+        - 64
+  Constant_18:
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: constant
+  Add_19:
+    inputs:
+    - ref: MatMul_17
+      channel: 64
+    - ref: Constant_18
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: add
+  Softmax_20:
+    inputs:
+    - ref: Add_19
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: softmax
+  Conv_21:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Relu_11
+      channel: 128
+    outputs:
+    - height: 8
+      width: 8
+      channel: 2
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 2
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:8
+        address:
+        - 256
+        - 64
+        - 128
+        - 2
+  Constant_22:
+    outputs:
+    - height: 8
+      width: 8
+      channel: 2
+    op:
+      op_id: constant
+  Add_23:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Conv_21
+      channel: 2
+    - height: 8
+      width: 8
+      ref: Constant_22
+      channel: 2
+    outputs:
+    - height: 8
+      width: 8
+      channel: 2
+    op:
+      op_id: add
+  Relu_24:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Add_23
+      channel: 2
+    outputs:
+    - height: 8
+      width: 8
+      channel: 2
+    op:
+      op_id: relu
+  Flatten_25:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Relu_24
+      channel: 2
+    outputs:
+    - height: 1
+      width: 1
+      channel: 128
+    op:
+      op_id: flatten
+  MatMul_26:
+    inputs:
+    - ref: Flatten_25
+      channel: 128
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: matmul
+      in_channel: 128
+      out_channel: 64
+      bias: false
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:9
+        address:
+        - 0
+        - 0
+        - 128
+        - 64
+  Constant_27:
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: constant
+  Add_28:
+    inputs:
+    - ref: MatMul_26
+      channel: 64
+    - ref: Constant_27
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: add
+  Relu_29:
+    inputs:
+    - ref: Add_28
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: relu
+  MatMul_30:
+    inputs:
+    - ref: Relu_29
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 1
+    op:
+      op_id: matmul
+      in_channel: 64
+      out_channel: 1
+      bias: false
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 452
+        - 100
+        - 64
+        - 1
+  Constant_31:
+    outputs:
+    - height: 1
+      width: 1
+      channel: 1
+    op:
+      op_id: constant
+  Add_32:
+    inputs:
+    - ref: MatMul_30
+      channel: 1
+    - ref: Constant_31
+      channel: 1
+    outputs:
+    - height: 1
+      width: 1
+      channel: 1
+    op:
+      op_id: add
+  Tanh_33:
+    inputs:
+    - ref: Add_32
+      channel: 1
+    outputs:
+    - height: 1
+      width: 1
+      channel: 1
+    op:
+      op_id: tanh
+  graph_output:
+    type: output
+    inputs:
+    - height: 1
+      width: 1
+      ref: Softmax_20
+      channel: 64
+      channel_last: true
+    - height: 1
+      width: 1
+      ref: Tanh_33
+      channel: 1
+      channel_last: true
+devices:
+  c200:
+    kind: rram-144k
+    number: 10
+    profile:
+      in_channel: 576
+      out_channel: 128
+      in_bits: 2
+      out_bits: 4
+      weight_bits: 4
+      signed: true

@@ -1,0 +1,1320 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - height: 32
+      width: 32
+      channel: 3
+      channel_last: true
+  Conv_0:
+    inputs:
+    - height: 32
+      width: 32
+      ref: graph_input:0
+      channel: 3
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 3
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 5
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 0
+        - 0
+        - 27
+        - 32
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 27
+        - 32
+        - 27
+        - 32
+      - index:
+        - 2
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 54
+        - 64
+        - 27
+        - 32
+      - index:
+        - 3
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 81
+        - 96
+        - 27
+        - 32
+      - index:
+        - 4
+        - 0
+        - 0
+        device: rram-144k:1
+        address:
+        - 0
+        - 0
+        - 27
+        - 32
+  Relu_1:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Conv_0
+      channel: 32
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: relu
+  Conv_2:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Relu_1
+      channel: 32
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 4
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:1
+        address:
+        - 27
+        - 32
+        - 288
+        - 32
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:2
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+      - index:
+        - 2
+        - 0
+        - 0
+        device: rram-144k:2
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+      - index:
+        - 3
+        - 0
+        - 0
+        device: rram-144k:3
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+  Relu_3:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Conv_2
+      channel: 32
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: relu
+  Conv_4:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Relu_3
+      channel: 32
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 5
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:3
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:4
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+      - index:
+        - 2
+        - 0
+        - 0
+        device: rram-144k:4
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+      - index:
+        - 3
+        - 0
+        - 0
+        device: rram-144k:5
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+      - index:
+        - 4
+        - 0
+        - 0
+        device: rram-144k:5
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+  Add_5:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Conv_4
+      channel: 32
+    - height: 32
+      width: 32
+      ref: Relu_1
+      channel: 32
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: add
+  Relu_6:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Add_5
+      channel: 32
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: relu
+  Conv_7:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Relu_6
+      channel: 32
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 4
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:6
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:6
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+      - index:
+        - 2
+        - 0
+        - 0
+        device: rram-144k:7
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+      - index:
+        - 3
+        - 0
+        - 0
+        device: rram-144k:7
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+  Relu_8:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Conv_7
+      channel: 32
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: relu
+  Conv_9:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Relu_8
+      channel: 32
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 4
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:8
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:8
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+      - index:
+        - 2
+        - 0
+        - 0
+        device: rram-144k:9
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+      - index:
+        - 3
+        - 0
+        - 0
+        device: rram-144k:9
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+  Add_10:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Conv_9
+      channel: 32
+    - height: 32
+      width: 32
+      ref: Relu_6
+      channel: 32
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: add
+  Relu_11:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Add_10
+      channel: 32
+    outputs:
+    - height: 32
+      width: 32
+      channel: 32
+    op:
+      op_id: relu
+  Conv_12:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Relu_11
+      channel: 32
+    outputs:
+    - height: 16
+      width: 16
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:10
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+  Relu_13:
+    inputs:
+    - height: 16
+      width: 16
+      ref: Conv_12
+      channel: 32
+    outputs:
+    - height: 16
+      width: 16
+      channel: 32
+    op:
+      op_id: relu
+  Conv_14:
+    inputs:
+    - height: 16
+      width: 16
+      ref: Relu_13
+      channel: 32
+    outputs:
+    - height: 16
+      width: 16
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:10
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+  Conv_15:
+    inputs:
+    - height: 32
+      width: 32
+      ref: Relu_11
+      channel: 32
+    outputs:
+    - height: 16
+      width: 16
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 1
+      stride: 2
+      padding: 0
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 2
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:1
+        address:
+        - 315
+        - 64
+        - 32
+        - 32
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:1
+        address:
+        - 347
+        - 96
+        - 32
+        - 32
+  Add_16:
+    inputs:
+    - height: 16
+      width: 16
+      ref: Conv_14
+      channel: 32
+    - height: 16
+      width: 16
+      ref: Conv_15
+      channel: 32
+    outputs:
+    - height: 16
+      width: 16
+      channel: 32
+    op:
+      op_id: add
+  Relu_17:
+    inputs:
+    - height: 16
+      width: 16
+      ref: Add_16
+      channel: 32
+    outputs:
+    - height: 16
+      width: 16
+      channel: 32
+    op:
+      op_id: relu
+  Conv_18:
+    inputs:
+    - height: 16
+      width: 16
+      ref: Relu_17
+      channel: 32
+    outputs:
+    - height: 16
+      width: 16
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:11
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+  Relu_19:
+    inputs:
+    - height: 16
+      width: 16
+      ref: Conv_18
+      channel: 32
+    outputs:
+    - height: 16
+      width: 16
+      channel: 32
+    op:
+      op_id: relu
+  Conv_20:
+    inputs:
+    - height: 16
+      width: 16
+      ref: Relu_19
+      channel: 32
+    outputs:
+    - height: 16
+      width: 16
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 2
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:11
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:12
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+  Add_21:
+    inputs:
+    - height: 16
+      width: 16
+      ref: Conv_20
+      channel: 32
+    - height: 16
+      width: 16
+      ref: Relu_17
+      channel: 32
+    outputs:
+    - height: 16
+      width: 16
+      channel: 32
+    op:
+      op_id: add
+  Relu_22:
+    inputs:
+    - height: 16
+      width: 16
+      ref: Add_21
+      channel: 32
+    outputs:
+    - height: 16
+      width: 16
+      channel: 32
+    op:
+      op_id: relu
+  Conv_23:
+    inputs:
+    - height: 16
+      width: 16
+      ref: Relu_22
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:12
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+  Relu_24:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Conv_23
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: relu
+  Conv_25:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Relu_24
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 2
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:13
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:13
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+  Conv_26:
+    inputs:
+    - height: 16
+      width: 16
+      ref: Relu_22
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 1
+      stride: 2
+      padding: 0
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:14
+        address:
+        - 0
+        - 0
+        - 32
+        - 32
+  Add_27:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Conv_25
+      channel: 32
+    - height: 8
+      width: 8
+      ref: Conv_26
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: add
+  Relu_28:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Add_27
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: relu
+  Conv_29:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Relu_28
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:14
+        address:
+        - 32
+        - 32
+        - 288
+        - 32
+  Relu_30:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Conv_29
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: relu
+  Conv_31:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Relu_30
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:15
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+  Add_32:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Conv_31
+      channel: 32
+    - height: 8
+      width: 8
+      ref: Relu_28
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: add
+  Relu_33:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Add_32
+      channel: 32
+    outputs:
+    - height: 8
+      width: 8
+      channel: 32
+    op:
+      op_id: relu
+  Conv_34:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Relu_33
+      channel: 32
+    outputs:
+    - height: 4
+      width: 4
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 2
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:15
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:16
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+  Relu_35:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Conv_34
+      channel: 32
+    outputs:
+    - height: 4
+      width: 4
+      channel: 32
+    op:
+      op_id: relu
+  Conv_36:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Relu_35
+      channel: 32
+    outputs:
+    - height: 4
+      width: 4
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:16
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+  Conv_37:
+    inputs:
+    - height: 8
+      width: 8
+      ref: Relu_33
+      channel: 32
+    outputs:
+    - height: 4
+      width: 4
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 1
+      stride: 2
+      padding: 0
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 5
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:14
+        address:
+        - 320
+        - 64
+        - 32
+        - 32
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:14
+        address:
+        - 352
+        - 96
+        - 32
+        - 32
+      - index:
+        - 2
+        - 0
+        - 0
+        device: rram-144k:17
+        address:
+        - 0
+        - 0
+        - 32
+        - 32
+      - index:
+        - 3
+        - 0
+        - 0
+        device: rram-144k:17
+        address:
+        - 32
+        - 32
+        - 32
+        - 32
+      - index:
+        - 4
+        - 0
+        - 0
+        device: rram-144k:17
+        address:
+        - 64
+        - 64
+        - 32
+        - 32
+  Add_38:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Conv_36
+      channel: 32
+    - height: 4
+      width: 4
+      ref: Conv_37
+      channel: 32
+    outputs:
+    - height: 4
+      width: 4
+      channel: 32
+    op:
+      op_id: add
+  Relu_39:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Add_38
+      channel: 32
+    outputs:
+    - height: 4
+      width: 4
+      channel: 32
+    op:
+      op_id: relu
+  Conv_40:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Relu_39
+      channel: 32
+    outputs:
+    - height: 4
+      width: 4
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:17
+        address:
+        - 96
+        - 96
+        - 288
+        - 32
+  Relu_41:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Conv_40
+      channel: 32
+    outputs:
+    - height: 4
+      width: 4
+      channel: 32
+    op:
+      op_id: relu
+  Conv_42:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Relu_41
+      channel: 32
+    outputs:
+    - height: 4
+      width: 4
+      channel: 32
+    op:
+      op_id: conv2d
+      in_channel: 32
+      out_channel: 32
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 2
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:18
+        address:
+        - 0
+        - 0
+        - 288
+        - 32
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:18
+        address:
+        - 288
+        - 32
+        - 288
+        - 32
+  Add_43:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Conv_42
+      channel: 32
+    - height: 4
+      width: 4
+      ref: Relu_39
+      channel: 32
+    outputs:
+    - height: 4
+      width: 4
+      channel: 32
+    op:
+      op_id: add
+  Relu_44:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Add_43
+      channel: 32
+    outputs:
+    - height: 4
+      width: 4
+      channel: 32
+    op:
+      op_id: relu
+  Flatten_45:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Relu_44
+      channel: 32
+    outputs:
+    - height: 1
+      width: 1
+      channel: 512
+    op:
+      op_id: flatten
+  MatMul_46:
+    inputs:
+    - ref: Flatten_45
+      channel: 512
+    outputs:
+    - height: 1
+      width: 1
+      channel: 10
+    op:
+      op_id: matmul
+      in_channel: 512
+      out_channel: 10
+      bias: false
+    mapping_info:
+      width: 1
+      height: 1
+      repeat: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:19
+        address:
+        - 0
+        - 0
+        - 512
+        - 10
+  graph_output:
+    type: output
+    inputs:
+    - height: 1
+      width: 1
+      ref: MatMul_46
+      channel: 10
+      channel_last: true
+devices:
+  c200:
+    kind: rram-144k
+    number: 20
+    profile:
+      in_channel: 576
+      out_channel: 128
+      in_bits: 2
+      out_bits: 4
+      weight_bits: 4
+      signed: true

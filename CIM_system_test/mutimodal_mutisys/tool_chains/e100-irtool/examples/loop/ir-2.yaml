@@ -1,0 +1,78 @@
+ir_version: e100-ir-1
+layers:
+  in:
+    type: input
+    inputs:
+      - ndim: 2
+        channel: 3
+  out:
+    type: output
+    inputs: [fc3]
+  conv0:
+    type: op
+    inputs: [in]
+    op:
+      op_id: conv2d
+      in_channel: 3
+      out_channel: 64
+      kernel: 1
+      bias: false
+  loop1:
+    type: loop
+    repeat: 5
+    inputs: [conv0]
+    layers:
+      in:
+        type: input
+        inputs:
+          - loop:
+              source: 'output'
+      conv1:
+        type: op
+        inputs: [in]
+        op:
+          op_id: conv2d
+          in_channel: 64
+          out_channel: 64
+          kernel: 3
+          padding: 1
+      relu1:
+        type: op
+        inputs: [conv1]
+        op: relu
+      conv2:
+        type: op
+        inputs: [in]
+        op:
+          op_id: conv2d
+          in_channel: 64
+          out_channel: 64
+          kernel: 1
+      relu2:
+        type: op
+        inputs: [conv2]
+        op: relu
+      add3:
+        type: op
+        inputs: [relu1, relu2]
+        op: add
+      pool4:
+        type: op
+        inputs: [add3]
+        op:
+          op_id: max_pool2d
+          kernel: 2
+      out:
+        type: output
+        inputs: [pool4]
+  flat2:
+    type: op
+    inputs: [loop1]
+    op: flatten
+  fc3:
+    type: op
+    inputs: [flat2]
+    op:
+      op_id: linear
+      in_channel: 64
+      out_channel: 10

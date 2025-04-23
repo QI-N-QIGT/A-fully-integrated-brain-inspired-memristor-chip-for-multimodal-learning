@@ -1,0 +1,64 @@
+ir-version: e100-ir-1
+layers:
+  inp:
+    type: input
+    inputs:
+    - dtype: uint8
+    - channel: 3
+      channel_last: true
+      width: 32
+      height: 32
+  conv:
+    inputs:
+    - inp
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 64
+        - 3
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 3
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+  out:
+    type: output
+    inputs:
+    - ref: conv
+      channel: 64
+      channel_last: true
+      width: 32
+      height: 32
+ir_version: e100-ir-1
+devices:
+  c200-0:
+    kind: rram-144k-cluster
+    number: 8
+    profile:
+      in_channel: 576
+      out_channel: 128
+      in_bits: 2
+      out_bits: 4
+      weight_bits: 4
+      signed: true
+    ip: 192.168.2.99
+  c200-1:
+    kind: rram-144k-cluster
+    number: 6
+    profile:
+      in_channel: 576
+      out_channel: 128
+      in_bits: 2
+      out_bits: 4
+      weight_bits: 4
+      signed: true
+    ip: 192.168.2.98

@@ -1,0 +1,8 @@
+<launch>
+  <include file="$(find ydlidar_ros_driver)/launch/TG.launch" />
+  <param name="frame_rate" value="5" />
+  <param name="frame_size" value="56x56" />
+  <node pkg="data_acquisition" type="video_publisher.py" name="video_publisher" />
+  <node pkg="data_acquisition" type="video_play.py" name="video_play" />
+  <node pkg="data_acquisition" type="audio_publisher.py" name="audio_publisher" />
+</launch>

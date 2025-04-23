@@ -1,0 +1,48 @@
+layers:
+  in:
+    type: input
+    inputs:
+    - channel: 3
+      ndim: 2
+  out:
+    type: output
+    inputs:
+    - lp-a-3
+  z:
+    type: op
+    op:
+      op_id: constant
+      value: 0
+  lp-split-i0:
+    inputs:
+    - in
+    op:
+      op_id: split
+      axis: 1
+      split: 4
+  lp-a-0:
+    type: op
+    inputs:
+    - lp-split-i0:0
+    - z
+    op:
+      op_id: add
+  lp-a-1:
+    type: reuse
+    layer: lp-a-0
+    inputs:
+    - lp-split-i0:1
+    - lp-a-0
+  lp-a-2:
+    type: reuse
+    layer: lp-a-0
+    inputs:
+    - lp-split-i0:2
+    - lp-a-1
+  lp-a-3:
+    type: reuse
+    layer: lp-a-0
+    inputs:
+    - lp-split-i0:3
+    - lp-a-2
+ir_version: e100-ir-1

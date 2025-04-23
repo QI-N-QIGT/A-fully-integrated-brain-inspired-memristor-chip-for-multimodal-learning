@@ -1,0 +1,59 @@
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - channel: 320
+      channel_last: true
+      width: 1
+      height: 1
+  MatMul_0:
+    inputs:
+    - ref: graph_input:0
+      channel: 320
+      width: 1
+      height: 1
+    outputs:
+    - channel: 64
+      width: 1
+      height: 1
+    weights:
+      weight:
+        shape:
+        - 64
+        - 320
+    op:
+      relu:
+        op_id: relu
+      op_id: fused_fc
+      in_channel: 320
+      out_channel: 64
+      bias: false
+  MatMul_2:
+    inputs:
+    - ref: MatMul_0
+      channel: 64
+      width: 1
+      height: 1
+    outputs:
+    - channel: 10
+      width: 1
+      height: 1
+    weights:
+      weight:
+        shape:
+        - 10
+        - 64
+    op:
+      op_id: matmul
+      in_channel: 64
+      out_channel: 10
+      bias: false
+  graph_output:
+    type: output
+    inputs:
+    - ref: MatMul_2
+      channel: 10
+      channel_last: true
+      width: 1
+      height: 1
+ir_version: e100-ir-1

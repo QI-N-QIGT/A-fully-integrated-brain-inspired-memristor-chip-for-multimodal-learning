@@ -1,0 +1,384 @@
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - channel: 320
+      channel_last: true
+      width: 1
+      height: 1
+  MatMul_0:
+    inputs:
+    - ref: graph_input:0
+      channel: 320
+      width: 1
+      height: 1
+    outputs:
+    - channel: 64
+      width: 1
+      height: 1
+    weights:
+      weight:
+        shape:
+        - 64
+        - 320
+    a111_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      input_tile_buffer_addr:
+      - 0
+      - 320
+      output_tile_buffer_addr:
+      - 0
+      - 64
+      in_buf_type: 0
+      out_buf_type: 0
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:0.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 320
+        - 64
+    a111_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      adc_range: 1
+      relu_threshold: 0
+      shift_num: 0
+    op:
+      relu:
+        op_id: relu
+      op_id: fused_fc
+      in_channel: 320
+      out_channel: 64
+      bias: false
+  MatMul_2:
+    inputs:
+    - ref: MatMul_0
+      channel: 64
+      width: 1
+      height: 1
+    outputs:
+    - channel: 10
+      width: 1
+      height: 1
+    weights:
+      weight:
+        shape:
+        - 10
+        - 64
+    a111_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      input_tile_buffer_addr:
+      - 2048
+      - 64
+      in_buf_type: 0
+      out_buf_type: 0
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:0.a111-xb:2
+        address:
+        - 0
+        - 0
+        - 64
+        - 10
+    a111_calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      adc_range: 1
+      relu_threshold: 0
+      shift_num: 0
+    op:
+      op_id: matmul
+      in_channel: 64
+      out_channel: 10
+      bias: false
+  graph_output:
+    type: output
+    inputs:
+    - ref: MatMul_2
+      channel: 10
+      channel_last: true
+      width: 1
+      height: 1
+ir_version: e100-ir-1
+devices:
+  a111-0:
+    devices:
+      a111-tile:0:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr:
+          - 0
+          - 320
+          out_esram_addr:
+          - 512
+          - 10
+          op_list:
+          - MatMul_0
+          - MatMul_2
+      a111-tile:1:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:2:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:3:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:4:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:5:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:6:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:7:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:8:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:9:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:10:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      a111-tile:11:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          in_esram_addr: 0
+          out_esram_addr: 0
+      mcu:
+        kind: a111-mcu
+    kind: a111-npu
+    ip: 192.168.2.5

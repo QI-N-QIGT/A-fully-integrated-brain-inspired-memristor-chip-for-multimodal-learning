@@ -1,0 +1,138 @@
+ir-version: e100-ir-1
+layers:
+  inp:
+    type: input
+    inputs:
+    - dtype: uint8
+  fc:
+    inputs:
+    - inp
+    outputs:
+    - height: 1
+      width: 1
+      channel: 10
+    weights:
+      weight:
+        shape:
+        - 10
+        - 10
+    op:
+      op_id: matmul
+      in_channel: 10
+      out_channel: 10
+      bias: false
+    mapping_info:
+      col_split_num: 2
+      row_split_num: 2
+      col_repeat_num: 3
+      row_repeat_num: 3
+      para_diff_array: 2
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 0
+        - 0
+        - 15
+        - 15
+      - index:
+        - 0
+        - 0
+        - 1
+        device: rram-144k:1
+        address:
+        - 0
+        - 15
+        - 15
+        - 15
+      - index:
+        - 0
+        - 1
+        - 0
+        device: rram-144k:2
+        address:
+        - 15
+        - 0
+        - 15
+        - 15
+      - index:
+        - 0
+        - 1
+        - 1
+        device: rram-144k:3
+        address:
+        - 15
+        - 15
+        - 15
+        - 15
+      - index:
+        - 1
+        - 0
+        - 0
+        device: rram-144k:4
+        address:
+        - 0
+        - 0
+        - 15
+        - 15
+      - index:
+        - 1
+        - 0
+        - 1
+        device: rram-144k:5
+        address:
+        - 0
+        - 15
+        - 15
+        - 15
+      - index:
+        - 1
+        - 1
+        - 0
+        device: rram-144k:6
+        address:
+        - 15
+        - 0
+        - 15
+        - 15
+      - index:
+        - 1
+        - 1
+        - 1
+        device: rram-144k:7
+        address:
+        - 15
+        - 15
+        - 15
+        - 15
+    calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 127
+      shift_expansion_mode: 'bit_shift'
+      n_scale: 0.0
+      adc_clamp: False 
+      ADC_LUT: False
+      adc_quant: True
+  out:
+    type: output
+    inputs:
+    - fc
+ir_version: e100-ir-1
+devices:
+  c200:
+    kind: rram-144k
+    number: 1
+    profile:
+      in_channel: 576
+      out_channel: 128
+      in_bits: 2
+      out_bits: 5
+      weight_bits: 4
+      signed: true

@@ -1,0 +1,14 @@
+/build
+/dist
+/tmp*
+*.pyc
+__pycache__
+*.egg-info
+*.np
+/test/torch/*.onnx
+/test/A111/simulation/data/
+/test/A111/simulation/new_example/
+*.onnx
+*.npy
+*.pth
+*.png

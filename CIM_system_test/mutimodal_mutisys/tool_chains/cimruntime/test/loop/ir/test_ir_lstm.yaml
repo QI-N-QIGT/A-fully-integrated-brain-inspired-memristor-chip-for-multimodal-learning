@@ -1,0 +1,36 @@
+ir_version: e100-ir-1
+layers:
+  in:
+    type: input
+    inputs:
+      - ndim: 16
+        channel: 100
+  out:
+    type: output
+    inputs: [lp]
+  z:
+    type: op
+    op:
+      op_id: constant
+      value: 0
+  lp:
+    type: loop
+    repeat: 16
+    inputs: [in, z]
+    layers:
+      i:
+        type: input
+        inputs:
+          - loop:
+              source: split
+              axis: 1
+          - loop:
+              source: output
+      a:
+        type: op
+        op: 
+          op_id: add
+        inputs: ['i:0', 'i:1']
+      o:
+        type: output
+        inputs: [a]

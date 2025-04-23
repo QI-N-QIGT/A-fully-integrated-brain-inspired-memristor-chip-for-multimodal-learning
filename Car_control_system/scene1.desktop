@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=SCENE1_START
+Comment=SCENE1_START
+#Exec=gnome-terminal -- bash -c 'source /home/pi/.bashrc; /home/pi/my_start.sh; exec bash'
+Exec=bash /home/pi/mycar_ws/scene1_start.sh
+Icon=/home/firefly/aoi_app/icon.jpg
+Terminal=true
+Type=Application
+Categories=Application;
+StartupNotify=false

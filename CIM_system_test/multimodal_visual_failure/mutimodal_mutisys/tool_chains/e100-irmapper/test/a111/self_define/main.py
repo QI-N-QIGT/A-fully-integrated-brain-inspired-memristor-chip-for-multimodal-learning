@@ -1,0 +1,10 @@
+from e100_irmapper.self_define.a111_layer import *
+a111_pipe_graph = A111PipeGraph()
+InLayer = A111InputLayer('Conv_0', input_image_size=[32, 32])
+Conv_0 = A111ConvLayer('Conv_0', tile_id=0, xb_id_list=[0, 1], in_channel=64, out_channel=64, adc_range=1, relu=True, shift_num=1, kernel_size=3, stride=2, output_pad=[1, 0, 1, 0])
+Conv_1 = A111ConvLayer('Conv_1', tile_id=0, xb_id_list=[2, 3], in_channel=64, out_channel=64, adc_range=1, relu=True, shift_num=1, kernel_size=3, stride=2, output_pad=[1, 0, 1, 0])
+Conv_2 = A111ConvLayer('Conv_2', tile_id=1, xb_id_list=[0, 1], in_channel=64, out_channel=128, adc_range=1, relu=True, shift_num=1, kernel_size=3, stride=2, avgpool=True, output_pad=[0, 0, 0, 0])
+OutLayer = A111OutputLayer('Conv_2')
+a111_pipe_graph.add_layer_list([InLayer, Conv_0, Conv_1, Conv_2, OutLayer])
+ir = a111_pipe_graph.to_ir()
+ir.dump_json(file='test\\a111\\self_define\\test_3_layer_3.yaml')

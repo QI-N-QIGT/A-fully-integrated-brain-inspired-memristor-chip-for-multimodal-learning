@@ -1,0 +1,483 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - channel: 64
+      width: 32
+      height: 32
+  Conv_0:
+    inputs:
+    - ref: graph_input:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    a111_mapping_info:
+      col_split_num: 1
+      row_split_num: 2
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      input_buffer_addr:
+        base: '0x78000000'
+        start: '0x0'
+        end: '0x4000'
+      output_buffer_addr:
+        base: '0x72000000'
+        start: '0x0'
+        end: '0x4000'
+      in_buf_type: 6
+      out_buf_type: 6
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:0.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 288
+        - 64
+      - index:
+        - 0
+        - 1
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:0.a111-xb:1
+        address:
+        - 0
+        - 0
+        - 288
+        - 64
+    a111_calc_info:
+      weight_scale: 1
+      adc_range: 1
+      relu_threshold: 0
+      shift_num: 1
+      buffer_wrap_en: 1
+      output_padding:
+        top: 1
+        bottom: 0
+        left: 1
+        right: 0
+    op:
+      op_id: fused_conv2d
+      in_channel: 64
+      out_channel: 64
+      kernel: 3
+      stride: 2
+      padding: 0
+      relu:
+        op_id: relu
+  Conv_1:
+    inputs:
+    - ref: Conv_0
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 64
+      width: 8
+      height: 8
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    a111_mapping_info:
+      col_split_num: 1
+      row_split_num: 2
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      input_buffer_addr:
+        base: '0x72000000'
+        start: '0x0'
+        end: '0x4000'
+      output_buffer_addr:
+        base: '0x74000000'
+        start: '0x0'
+        end: '0x4000'
+      in_buf_type: 6
+      out_buf_type: 6
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:2.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 288
+        - 64
+      - index:
+        - 0
+        - 1
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:2.a111-xb:1
+        address:
+        - 0
+        - 0
+        - 288
+        - 64
+    a111_calc_info:
+      weight_scale: 1
+      adc_range: 1
+      relu_threshold: 0
+      shift_num: 1
+      buffer_wrap_en: 1
+      output_padding:
+        top: 1
+        bottom: 0
+        left: 1
+        right: 0
+    op:
+      op_id: fused_conv2d
+      in_channel: 64
+      out_channel: 64
+      kernel: 3
+      stride: 2
+      padding: 0
+      relu:
+        op_id: relu
+  Conv_2:
+    inputs:
+    - ref: Conv_1
+      channel: 64
+      width: 8
+      height: 8
+    outputs:
+    - channel: 128
+      width: 1
+      height: 1
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    a111_mapping_info:
+      col_split_num: 1
+      row_split_num: 2
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      input_buffer_addr:
+        base: '0x74000000'
+        start: '0x0'
+        end: '0x4000'
+      output_buffer_addr:
+        base: '0x68000000'
+        start: '0x10000'
+        end: '0x10080'
+      in_buf_type: 6
+      out_buf_type: 6
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:4.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 288
+        - 128
+      - index:
+        - 0
+        - 1
+        - 0
+        device: a111-0.a111-npu:0.a111-tile:4.a111-xb:1
+        address:
+        - 0
+        - 0
+        - 288
+        - 128
+    a111_calc_info:
+      weight_scale: 1
+      adc_range: 1
+      relu_threshold: 0
+      shift_num: 1
+      buffer_wrap_en: 0
+      output_padding:
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+    op:
+      op_id: fused_conv2d
+      in_channel: 64
+      out_channel: 128
+      kernel: 3
+      stride: 2
+      padding: 0
+      relu:
+        op_id: relu
+      pool:
+        op_id: avgpool2d
+        kernel: 2
+        stride: 2
+        padding: 0
+  graph_output:
+    type: output
+    inputs:
+    - ref: Conv_2
+      channel: 128
+      width: 1
+      height: 1
+devices:
+  a111-0:
+    devices:
+      a111-tile:0:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          op_list:
+          - Conv_0
+      a111-tile:1:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+      a111-tile:2:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          op_list:
+          - Conv_1
+      a111-tile:3:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+      a111-tile:4:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 1
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+          op_list:
+          - Conv_2
+      a111-tile:5:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+      a111-tile:6:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+      a111-tile:7:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+      a111-tile:8:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+      a111-tile:9:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+      a111-tile:10:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+      a111-tile:11:
+        devices:
+          xb:
+            kind: a111-xb
+            number: 4
+            profile:
+              in_channel: 320
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: a111-tile
+        info:
+          tile_mode: 3
+          pool0_en: 0
+          pool1_en: 0
+          pool2_en: 0
+          pool3_en: 0
+      mcu:
+        kind: a111-mcu
+    kind: a111-npu
+    number: 1

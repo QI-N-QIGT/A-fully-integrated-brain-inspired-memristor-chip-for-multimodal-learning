@@ -1,0 +1,68 @@
+ir-version: e100-ir-1
+layers:
+  inp:
+    type: input
+    inputs:
+    - dtype: uint8
+    - channel: 320
+      channel_last: false
+      width: 1
+      height: 1
+  fc:
+    inputs:
+    - inp
+    outputs:
+    - channel: 64
+      width: 1
+      height: 1
+    weights:
+      weight:
+        shape:
+        - 64
+        - 320
+    op:
+      kernel: 1
+      padding: 0
+      stride: 0
+      op_id: matmul
+      in_channel: 320
+      out_channel: 64
+      bias: false
+    mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      input_tile_buffer_addr:
+      - 0
+      - 320
+      in_buf_type: 0
+      out_buf_type: 0
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: a111-tile:0.a111-xb:0
+        address:
+        - 0
+        - 0
+        - 320
+        - 64
+    calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      adc_range: 1
+      relu_threshold: 0
+      shift_num: 0
+  out:
+    type: output
+    inputs:
+    - ref: fc
+      channel: 64
+      channel_last: false
+      width: 1
+      height: 1
+ir_version: e100-ir-1
+
